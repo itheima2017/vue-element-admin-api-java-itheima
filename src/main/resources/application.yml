@@ -27,4 +27,3 @@ server:
   port: 7999
 logging:
   path: /home/vue-element-admin/logs
-  level: info

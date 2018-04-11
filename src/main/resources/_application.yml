@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://{{dbinstance}}/{{dbname}}?useUnicode=true&characterEncoding=utf8
-    username: {{username}}
-    password: {{password}}
+    username: {{dbusername}}
+    password: {{dbpassword}}
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     database: mysql

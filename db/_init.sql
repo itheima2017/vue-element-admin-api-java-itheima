@@ -1,3 +1,5 @@
+#设置字符编码
+set character set utf8;
 #创建数据库
 CREATE DATABASE IF NOT EXISTS {{dbname}} DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;
 USE {{dbname}};

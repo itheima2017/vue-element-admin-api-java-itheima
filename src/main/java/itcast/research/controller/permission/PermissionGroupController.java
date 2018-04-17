@@ -45,9 +45,9 @@ public class PermissionGroupController {
      */
     @PreAuthorize("hasAuthority('GET|/base/permissions')")
     @RequestMapping(name = "check分页获取权限组列表", value = "/base/permissions", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public Mono<Map<String, Object>> findPermissionGroupByPage(@RequestParam(name = "page", defaultValue = "1") Integer page, @RequestParam(name = "pagesize", defaultValue = "10") Integer pageSize, @RequestParam(name = "sort", required = false) String sort) throws Exception {
+    public Mono<Map<String, Object>> findPermissionGroupByPage(@RequestParam(name = "page", defaultValue = "1") Integer page, @RequestParam(name = "pagesize", defaultValue = "10") Integer pageSize, @RequestParam(name = "title", required = false) String title, @RequestParam(name = "sort", required = false) String sort) throws Exception {
         //获取数据
-        Page<PermissionGroup> permissionGroupPage = permissionsGroupService.findPermissionGroupByPage(page, pageSize, sort);
+        Page<PermissionGroup> permissionGroupPage = permissionsGroupService.findPermissionGroupByPage(page, pageSize, title, sort);
         if (permissionGroupPage == null) {
             throw new CommonException("查询失败！");
         }

@@ -21,7 +21,7 @@ public interface IPermissionsGroupService {
      * @return 权限组列表
      * @throws Exception
      */
-    Page<PermissionGroup> findPermissionGroupByPage(int page, int pageSize, String sort) throws Exception;
+    Page<PermissionGroup> findPermissionGroupByPage(int page, int pageSize, String title, String sort) throws Exception;
 
     /**
      * 获取全部权限组

@@ -35,9 +35,20 @@ public class PermissionsGroupServiceImpl implements IPermissionsGroupService {
     private IPermissionRepository permissionRepository;
 
     @Override
-    public Page<PermissionGroup> findPermissionGroupByPage(int page, int pageSize, String sort) throws Exception {
+    public Page<PermissionGroup> findPermissionGroupByPage(int page, int pageSize, String title, String sort) throws Exception {
         Pageable pageable = PageRequest.of(page - 1, pageSize, VEAStringUtil.getSort(sort, Sort.Direction.ASC));
-        Page<PermissionGroup> permissionGroupPage = permissionGroupRepository.findAll(pageable);
+        Page<PermissionGroup> permissionGroupPage = permissionGroupRepository.findAll(new Specification<PermissionGroup>() {
+            @Override
+            public Predicate toPredicate(Root<PermissionGroup> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<Predicate>();
+                if (VEAStringUtil.isNotBlank(title)) {
+                    Path<String> namePath = root.get("name");
+                    Predicate nameLike = criteriaBuilder.like(namePath, "%" + title + "%");
+                    predicates.add(nameLike);
+                }
+                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        }, pageable);
         return permissionGroupPage;
     }
 

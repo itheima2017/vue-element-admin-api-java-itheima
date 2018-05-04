@@ -7,6 +7,7 @@ import itcast.research.entity.permission.PermissionMenuExtend;
 import itcast.research.entity.permission.PermissionPointExtend;
 import itcast.research.exception.CommonException;
 import itcast.research.service.permission.IPermissionService;
+import itcast.research.util.VEAStringUtil;
 import itcast.research.util.permission.PermissionConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -175,7 +176,8 @@ public class PermissionController {
         }
         boolean isPoint = permission.getType().equals(PermissionConstants.PERMISSION_TYPE_POINT);
         map.put("is_point", isPoint ? true : false);
-        map.put("code", isPoint ? permission.getPermissionPointExtend().getCode() : "");
+        String code = isPoint ? permission.getPermissionPointExtend().getCode() : permission.getPermissionMenuExtend().getCode();
+        map.put("code", VEAStringUtil.isBlank(code) ? "" : code);
         map.put("title", permission.getName());
         return map;
     }

@@ -200,9 +200,11 @@ public class PermissionController {
             if (permission.getType().equals(PermissionConstants.PERMISSION_TYPE_MENU)) {
                 PermissionMenuExtend menuExtend = permission.getPermissionMenuExtend();
                 map.put("code", menuExtend.getCode() == null ? "" : menuExtend.getCode());
+                map.put("is_point", false);
             } else if (permission.getType().equals(PermissionConstants.PERMISSION_TYPE_POINT)) {
                 PermissionPointExtend pointExtend = permission.getPermissionPointExtend();
                 map.put("code", pointExtend.getCode());
+                map.put("is_point", true);
             }
             if (permission.getChildrenPermission() != null && permission.getChildrenPermission().size() > 0) {
                 Set<Permission> permissionSet = permission.getChildrenPermission();

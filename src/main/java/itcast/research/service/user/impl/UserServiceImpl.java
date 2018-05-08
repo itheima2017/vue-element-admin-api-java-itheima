@@ -106,7 +106,7 @@ public class UserServiceImpl implements IUserService {
         if (originUser == null) {
             throw new CommonException("用户不存在！");
         }
-        user.setLastUpdateTime(new Date());
+        originUser.setLastUpdateTime(new Date());
         //处理用户邮箱信息
         if (VEAStringUtil.isNotBlank(user.getEmail())) {
             originUser.setEmail(user.getEmail());

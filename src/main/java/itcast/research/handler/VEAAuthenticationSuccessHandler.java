@@ -19,9 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IDEA
@@ -53,6 +51,7 @@ public class VEAAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
         map.put("token", token);
         ObjectMapper om = new ObjectMapper();
         om.writeValue(response.getOutputStream(), map);
+        List<String> list=new ArrayList<>();
         Log log = new Log();
         log.setOperationDate(new Date());
         log.setUrl("/base/frame/login");

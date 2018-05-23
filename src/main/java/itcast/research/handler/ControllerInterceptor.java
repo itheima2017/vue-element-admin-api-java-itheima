@@ -63,6 +63,11 @@ public class ControllerInterceptor {
         saveLog(jp, false);
     }
 
+    /**
+     * 保存日志
+     * @param jp 方法信息
+     * @param isSuc 操作结果标记
+     */
     public void saveLog(JoinPoint jp, boolean isSuc) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String method = request.getMethod();

@@ -188,7 +188,51 @@ public class PermissionServiceImpl implements IPermissionService {
                     }
                 }
             }
+            //处理与子权限的关系
+            LinkedList<Permission> subPermissionList = new LinkedList<>();
+            getNode(new ArrayList<>(permission.getChildrenPermission()), subPermissionList);
+            while (subPermissionList.size() != 0) {
+                Permission subPermission = subPermissionList.pollLast();
+                permissionRepository.deleteById(subPermission.getId());
+            }
             permissionRepository.deleteById(id);
+        }
+    }
+
+    private void getNode(List<Permission> permissionList, List<Permission> subPermissionList) {
+        for (int i = 0; i < permissionList.size(); i++) {
+            Permission permission = permissionList.get(i);
+            //处理与权限组关联关系
+            if (permission.getPermissionGroups() != null && permission.getPermissionGroups().size() > 0) {
+                for (PermissionGroup group : permission.getPermissionGroups()) {
+                    PermissionGroup originGroup = permissionGroupRepository.getOne(group.getId());
+                    if (originGroup != null && originGroup.getPermissions() != null && originGroup.getPermissions().size() > 0) {
+                        Set<Permission> permissionSet = originGroup.getPermissions();
+                        Set<Permission> inPermissionSet = new HashSet<>();
+                        for (Permission originPermission : permissionSet) {
+                            if (originPermission.getId() != permission.getId()) {
+                                inPermissionSet.add(originPermission);
+                            }
+                        }
+                        originGroup.setPermissions(inPermissionSet);
+                    }
+                }
+            }
+            if (permission.getChildrenPermission() != null && permission.getChildrenPermission().size() > 0) {
+                Set<Permission> permissionSet = permission.getChildrenPermission();
+                List<Permission> subMenuList = new ArrayList<>();
+                for (Permission per : permissionSet) {
+                    if (per.getType().equals(PermissionConstants.PERMISSION_TYPE_MENU)) {
+                        subMenuList.add(per);
+                        subPermissionList.add(per);
+                    } else {
+                        permissionRepository.deleteById(per.getId());
+                    }
+                }
+                if (subMenuList.size() > 0) {
+                    getNode(subMenuList, subPermissionList);
+                }
+            }
         }
     }
 

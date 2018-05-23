@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://192.168.23.1:3306/vue_element_admin?useUnicode=true&characterEncoding=utf8
-    username: dev
-    password: 123456q
+    url: jdbc:mysql://localhost:3306/vue_element_admin?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 3flreaem37
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     database: mysql

@@ -88,7 +88,7 @@ public class UserServiceImpl implements IUserService {
         user.setLastUpdateTime(now);
         user.setStatus(EUserStatus.NORMAL.getCode());
         //对密码进行加密
-        user.setPassword(CodecUtil.getSha1(user.getPassword()));
+        user.setPassword(CodecUtil.getSHA256(user.getPassword()));
         if (user.getPermissionGroup() != null) {
             PermissionGroup permissionGroup = permissionGroupRepository.getOne(user.getPermissionGroup().getId());
             if (permissionGroup != null) {
@@ -113,7 +113,7 @@ public class UserServiceImpl implements IUserService {
         }
         //处理密码信息
         if (VEAStringUtil.isNotBlank(user.getPassword())) {
-            originUser.setPassword(CodecUtil.getSha1(user.getPassword()));
+            originUser.setPassword(CodecUtil.getSHA256(user.getPassword()));
         }
         //处理电话信息
         if (VEAStringUtil.isNotBlank(user.getPhone())) {
